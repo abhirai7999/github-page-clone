@@ -1,0 +1,1016 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Abhishek Rai – GitHub</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --bg: #0d1117;
+    --bg2: #161b22;
+    --bg3: #21262d;
+    --border: #30363d;
+    --text: #e6edf3;
+    --muted: #8b949e;
+    --cyan: #58a6ff;
+    --green: #3fb950;
+    --pink: #ff7b72;
+    --purple: #a371f7;
+    --teal: #39d353;
+    --accent: #1f6feb;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* ── CANVAS BACKGROUND ── */
+  #bg-canvas {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: relative;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 32px;
+    border-bottom: 1px solid var(--border);
+    background: rgba(13,17,23,0.85);
+    backdrop-filter: blur(10px);
+  }
+
+  .nav-logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 700;
+    font-size: 18px;
+    color: var(--text);
+    text-decoration: none;
+  }
+
+  .nav-logo svg { width: 32px; height: 32px; fill: var(--text); }
+
+  .nav-links {
+    display: flex;
+    gap: 20px;
+    list-style: none;
+  }
+
+  .nav-links a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    transition: color .2s;
+  }
+  .nav-links a:hover { color: var(--text); }
+
+  .nav-actions { display: flex; gap: 12px; align-items: center; }
+
+  .btn {
+    padding: 6px 16px;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all .2s;
+    text-decoration: none;
+    border: 1px solid transparent;
+  }
+
+  .btn-ghost {
+    background: transparent;
+    border-color: var(--border);
+    color: var(--text);
+  }
+  .btn-ghost:hover { background: var(--bg3); }
+
+  .btn-primary {
+    background: var(--green);
+    color: #0d1117;
+    border-color: rgba(255,255,255,.1);
+  }
+  .btn-primary:hover { background: #46d55b; transform: translateY(-1px); }
+
+  /* ── HERO ── */
+  #hero {
+    position: relative;
+    z-index: 5;
+    min-height: 90vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 60px 32px;
+  }
+
+  .hero-inner {
+    max-width: 900px;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: center;
+  }
+
+  .hero-text h1 {
+    font-size: clamp(36px, 5vw, 56px);
+    font-weight: 700;
+    line-height: 1.15;
+    letter-spacing: -1px;
+    margin-bottom: 20px;
+  }
+
+  .hero-text h1 span {
+    background: linear-gradient(135deg, var(--cyan), var(--purple));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .hero-text p {
+    color: var(--muted);
+    font-size: 18px;
+    line-height: 1.6;
+    margin-bottom: 32px;
+  }
+
+  .signup-form {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  .signup-form input {
+    flex: 1;
+    min-width: 200px;
+    padding: 10px 16px;
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    color: var(--text);
+    font-size: 14px;
+    outline: none;
+    transition: border-color .2s;
+  }
+  .signup-form input:focus { border-color: var(--cyan); }
+  .signup-form input::placeholder { color: var(--muted); }
+
+  .hero-stats {
+    display: flex;
+    gap: 32px;
+    margin-top: 40px;
+    padding-top: 24px;
+    border-top: 1px solid var(--border);
+  }
+
+  .stat { text-align: center; }
+  .stat-num {
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--text);
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .stat-num .accent { color: var(--cyan); }
+  .stat-label { font-size: 12px; color: var(--muted); margin-top: 2px; }
+
+  /* Globe visual */
+  .hero-visual {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .globe-wrap {
+    position: relative;
+    width: 320px;
+    height: 320px;
+  }
+
+  #globe-canvas {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+  }
+
+  .octocat {
+    position: absolute;
+    bottom: -10px;
+    right: -10px;
+    width: 90px;
+    animation: float 3s ease-in-out infinite;
+  }
+
+  @keyframes float {
+    0%,100% { transform: translateY(0); }
+    50% { transform: translateY(-12px); }
+  }
+
+  /* ── DIVIDER ── */
+  .section-divider {
+    position: relative;
+    z-index: 5;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--border), transparent);
+    margin: 0 32px;
+  }
+
+  /* ── PROFILE PAGE ── */
+  #profile {
+    position: relative;
+    z-index: 5;
+    padding: 48px 32px;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .profile-layout {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    gap: 40px;
+  }
+
+  /* Sidebar */
+  .profile-sidebar {}
+
+  .avatar-wrap {
+    position: relative;
+    width: 200px;
+    margin-bottom: 16px;
+  }
+
+  .avatar-wrap img {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    border: 3px solid var(--border);
+    object-fit: cover;
+    display: block;
+  }
+
+  .avatar-placeholder {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    border: 3px solid var(--border);
+    background: linear-gradient(135deg, #1f6feb, #a371f7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 72px;
+    font-weight: 700;
+    color: #fff;
+    letter-spacing: -2px;
+  }
+
+  .avatar-emoji {
+    position: absolute;
+    bottom: 8px;
+    right: 8px;
+    background: var(--bg2);
+    border: 2px solid var(--border);
+    border-radius: 50%;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    cursor: pointer;
+  }
+
+  .profile-name {
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+
+  .profile-username {
+    font-size: 18px;
+    color: var(--muted);
+    font-weight: 300;
+    margin-bottom: 4px;
+  }
+
+  .profile-pronoun {
+    font-size: 13px;
+    color: var(--muted);
+    margin-bottom: 16px;
+  }
+
+  .profile-bio {
+    font-size: 14px;
+    color: var(--muted);
+    margin-bottom: 20px;
+    line-height: 1.5;
+  }
+
+  .btn-edit {
+    width: 100%;
+    text-align: center;
+    padding: 8px 16px;
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    color: var(--text);
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background .2s;
+    display: block;
+    margin-bottom: 20px;
+  }
+  .btn-edit:hover { background: var(--bg3); }
+
+  .profile-meta {
+    list-style: none;
+    font-size: 14px;
+    color: var(--muted);
+    margin-bottom: 20px;
+  }
+  .profile-meta li {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 8px;
+  }
+  .profile-meta svg { width: 16px; height: 16px; fill: var(--muted); flex-shrink: 0; }
+
+  .follow-line {
+    font-size: 14px;
+    color: var(--muted);
+    display: flex;
+    gap: 16px;
+  }
+  .follow-line span b { color: var(--text); }
+
+  /* Main content */
+  .profile-main {}
+
+  /* Private notice */
+  .private-notice {
+    background: rgba(31,111,235,.1);
+    border: 1px solid rgba(31,111,235,.3);
+    border-radius: 8px;
+    padding: 12px 16px;
+    font-size: 13px;
+    color: var(--muted);
+    margin-bottom: 24px;
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+  }
+  .private-notice svg { width: 16px; height: 16px; fill: var(--cyan); flex-shrink: 0; margin-top: 1px; }
+  .private-notice a { color: var(--cyan); }
+
+  /* README Banner */
+  .readme-banner {
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 24px;
+  }
+
+  .readme-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 16px;
+    background: var(--bg2);
+    border-bottom: 1px solid var(--border);
+    font-size: 13px;
+    color: var(--muted);
+  }
+
+  .readme-header svg { width: 16px; height: 16px; fill: var(--muted); cursor: pointer; }
+
+  .readme-card {
+    padding: 32px;
+    background: var(--bg);
+    text-align: center;
+  }
+
+  .readme-title-banner {
+    background: linear-gradient(135deg, #0a3d62 0%, #1a6fa8 50%, #0d4f8b 100%);
+    border-radius: 8px;
+    padding: 32px 24px 24px;
+    margin-bottom: 24px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .readme-title-banner::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  }
+
+  .readme-title-banner h2 {
+    font-size: 36px;
+    font-weight: 800;
+    color: #7dd3fc;
+    letter-spacing: 1px;
+    margin-bottom: 4px;
+    text-shadow: 0 0 30px rgba(125,211,252,.4);
+    animation: glow 2s ease-in-out infinite alternate;
+  }
+
+  @keyframes glow {
+    from { text-shadow: 0 0 20px rgba(125,211,252,.3); }
+    to { text-shadow: 0 0 40px rgba(125,211,252,.7), 0 0 60px rgba(125,211,252,.3); }
+  }
+
+  .readme-title-banner .subtitle {
+    color: #93c5fd;
+    font-size: 14px;
+    font-weight: 500;
+  }
+
+  .readme-skills {
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--cyan);
+    letter-spacing: 2px;
+    margin-bottom: 20px;
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  .badge-row {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 8px;
+  }
+
+  .badge {
+    padding: 4px 12px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    cursor: pointer;
+    transition: transform .15s;
+    text-decoration: none;
+  }
+  .badge:hover { transform: translateY(-2px); }
+
+  .badge-views { background: #1e3a5f; color: #58a6ff; border: 1px solid #1f6feb; }
+  .badge-linkedin { background: #0a66c2; color: #fff; }
+  .badge-gmail { background: #ea4335; color: #fff; }
+  .badge-trail { background: #032d60; color: #009edb; border: 1px solid #009edb; }
+
+  /* Contribution graph */
+  .contrib-section {
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+  }
+
+  .contrib-header {
+    padding: 12px 16px;
+    background: var(--bg2);
+    border-bottom: 1px solid var(--border);
+    font-size: 14px;
+    color: var(--muted);
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .contrib-body { padding: 20px; }
+
+  .contrib-graph {
+    display: flex;
+    gap: 3px;
+    overflow-x: auto;
+  }
+
+  .contrib-week {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+  }
+
+  .contrib-day {
+    width: 10px;
+    height: 10px;
+    border-radius: 2px;
+    background: var(--bg3);
+    transition: transform .1s;
+    cursor: pointer;
+  }
+  .contrib-day:hover { transform: scale(1.3); }
+  .contrib-day.l1 { background: #0e4429; }
+  .contrib-day.l2 { background: #006d32; }
+  .contrib-day.l3 { background: #26a641; }
+  .contrib-day.l4 { background: #39d353; }
+
+  /* Typing animation */
+  .typing-wrap {
+    display: inline-block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    color: var(--teal);
+    margin-bottom: 12px;
+  }
+  .cursor {
+    display: inline-block;
+    width: 8px;
+    height: 14px;
+    background: var(--teal);
+    vertical-align: middle;
+    margin-left: 2px;
+    animation: blink .7s steps(1) infinite;
+  }
+  @keyframes blink { 50% { opacity: 0; } }
+
+  /* Footer */
+  footer {
+    position: relative;
+    z-index: 5;
+    text-align: center;
+    padding: 32px;
+    border-top: 1px solid var(--border);
+    color: var(--muted);
+    font-size: 12px;
+  }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .hero-inner { grid-template-columns: 1fr; }
+    .hero-visual { display: none; }
+    .profile-layout { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Animated BG -->
+<canvas id="bg-canvas"></canvas>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" href="#">
+    <svg viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+      <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/>
+    </svg>
+    GitHub
+  </a>
+  <ul class="nav-links">
+    <li><a href="#">Product</a></li>
+    <li><a href="#">Solutions</a></li>
+    <li><a href="#">Open Source</a></li>
+    <li><a href="#">Pricing</a></li>
+  </ul>
+  <div class="nav-actions">
+    <a href="#profile" class="btn btn-ghost">Sign in</a>
+    <a href="#" class="btn btn-primary">Sign up</a>
+  </div>
+</nav>
+
+<!-- HERO (Landing) -->
+<section id="hero">
+  <div class="hero-inner">
+    <div class="hero-text">
+      <h1>Where the world<br/><span>builds software</span></h1>
+      <p>Millions of developers and companies build, ship, and maintain their software on GitHub — the largest and most advanced development platform in the world.</p>
+      <div class="signup-form">
+        <input type="email" placeholder="Email address" />
+        <a href="#profile" class="btn btn-primary" style="padding:10px 20px;font-size:15px;">Sign up for GitHub</a>
+      </div>
+      <div class="hero-stats">
+        <div class="stat">
+          <div class="stat-num"><span class="accent">100</span>M+</div>
+          <div class="stat-label">Developers</div>
+        </div>
+        <div class="stat">
+          <div class="stat-num"><span class="accent">4</span>M+</div>
+          <div class="stat-label">Organizations</div>
+        </div>
+        <div class="stat">
+          <div class="stat-num"><span class="accent">420</span>M+</div>
+          <div class="stat-label">Repositories</div>
+        </div>
+        <div class="stat">
+          <div class="stat-num"><span class="accent">90</span>%</div>
+          <div class="stat-label">Fortune 100</div>
+        </div>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="globe-wrap">
+        <canvas id="globe-canvas" width="320" height="320"></canvas>
+        <!-- Octocat SVG inline -->
+        <svg class="octocat" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+          <!-- Helmet -->
+          <ellipse cx="100" cy="80" rx="55" ry="60" fill="#c0c0c0" opacity=".3"/>
+          <ellipse cx="100" cy="80" rx="48" ry="52" fill="#1a1a2e"/>
+          <ellipse cx="100" cy="80" rx="38" ry="42" fill="#16213e" opacity=".7"/>
+          <!-- Visor glare -->
+          <ellipse cx="88" cy="68" rx="12" ry="8" fill="white" opacity=".15" transform="rotate(-15 88 68)"/>
+          <!-- Body -->
+          <ellipse cx="100" cy="150" rx="35" ry="30" fill="#2d3561"/>
+          <!-- Arms -->
+          <path d="M65 145 Q50 155 48 170" stroke="#2d3561" stroke-width="12" fill="none" stroke-linecap="round"/>
+          <path d="M135 145 Q150 155 152 170" stroke="#2d3561" stroke-width="12" fill="none" stroke-linecap="round"/>
+          <!-- Cat ears -->
+          <path d="M72 38 L62 18 L82 30 Z" fill="#8b949e"/>
+          <path d="M128 38 L138 18 L118 30 Z" fill="#8b949e"/>
+          <!-- Eyes (glow) -->
+          <circle cx="85" cy="80" r="5" fill="#58a6ff" opacity=".9"/>
+          <circle cx="115" cy="80" r="5" fill="#58a6ff" opacity=".9"/>
+          <circle cx="85" cy="80" r="2" fill="white"/>
+          <circle cx="115" cy="80" r="2" fill="white"/>
+          <!-- Tentacle tail -->
+          <path d="M100 175 Q90 190 80 195 Q70 200 78 188 Q85 178 100 180Z" fill="#6e7681"/>
+        </svg>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- SIGNUP CTA Banner -->
+<div style="position:relative;z-index:5;background:var(--bg2);padding:40px 32px;text-align:center;border-bottom:1px solid var(--border);">
+  <h3 style="font-size:24px;margin-bottom:8px;">Join the world's largest developer community</h3>
+  <p style="color:var(--muted);margin-bottom:20px;font-size:15px;">Sign up and start building today — it's free.</p>
+  <a href="#profile" class="btn btn-primary" style="font-size:15px;padding:10px 28px;">Create your account</a>
+</div>
+
+<div class="section-divider"></div>
+
+<!-- PROFILE PAGE -->
+<section id="profile">
+  <div class="profile-layout">
+
+    <!-- SIDEBAR -->
+    <aside class="profile-sidebar">
+      <div class="avatar-wrap">
+        <div class="avatar-placeholder">AR</div>
+        <div class="avatar-emoji">😊</div>
+      </div>
+
+      <div class="profile-name">Abhishek Rai</div>
+      <div class="profile-username">abhirai7999 · <span style="font-size:13px;color:var(--muted)">he/him</span></div>
+      <div class="profile-bio">Salesforce Developer</div>
+
+      <a href="#" class="btn-edit">Edit profile</a>
+
+      <ul class="profile-meta">
+        <li>
+          <svg viewBox="0 0 16 16"><path d="M8 9.5a1.5 1.5 0 100-3 1.5 1.5 0 000 3z"/><path fill-rule="evenodd" d="M8 0a8 8 0 100 16A8 8 0 008 0zM1.5 8a6.5 6.5 0 1113 0 6.5 6.5 0 01-13 0z"/></svg>
+          Noida, India
+        </li>
+        <li>
+          <svg viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.75 2h12.5c.966 0 1.75.784 1.75 1.75v8.5A1.75 1.75 0 0114.25 14H1.75A1.75 1.75 0 010 12.25v-8.5C0 2.784.784 2 1.75 2zM1.5 12.251c0 .138.112.25.25.25h12.5a.25.25 0 00.25-.25V5.809L8.38 8.563a.75.75 0 01-.76 0L1.5 5.809v6.442zm13-8.181v-.32a.25.25 0 00-.25-.25H1.75a.25.25 0 00-.25.25v.32L8 7.88l6.5-3.81z"/></svg>
+          abhishekrai@gmail.com
+        </li>
+        <li>
+          <svg viewBox="0 0 16 16"><path d="M0 8a8 8 0 1116 0A8 8 0 010 8zm8-6.5a6.5 6.5 0 100 13 6.5 6.5 0 000-13z"/></svg>
+          Salesforce Developer · CRM Architect
+        </li>
+      </ul>
+
+      <div class="follow-line">
+        <span><b>1</b> follower</span>
+        <span><b>1</b> following</span>
+      </div>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <main class="profile-main">
+
+      <!-- Private notice -->
+      <div class="private-notice">
+        <svg viewBox="0 0 16 16"><path fill-rule="evenodd" d="M8 1.5a6.5 6.5 0 100 13 6.5 6.5 0 000-13zM0 8a8 8 0 1116 0A8 8 0 010 8zm6.5-.25A.75.75 0 017.25 7h1a.75.75 0 01.75.75v2.75h.25a.75.75 0 010 1.5h-2a.75.75 0 010-1.5h.25v-2h-.25a.75.75 0 01-.75-.75zM8 6a1 1 0 100-2 1 1 0 000 2z"/></svg>
+        <div>
+          <strong style="color:var(--text)">Only you can see your full profile</strong><br/>
+          You have marked your profile as private, which limits what activity other people can see.
+          <a href="#">Update profile settings</a>.
+          <br/><a href="#">Send feedback</a>
+        </div>
+        <div style="margin-left:auto;flex-shrink:0">
+          <a href="#" class="btn btn-ghost" style="font-size:12px;">View what others see</a>
+        </div>
+      </div>
+
+      <!-- README card -->
+      <div class="readme-banner">
+        <div class="readme-header">
+          <span>abhirai7999 / README.md</span>
+          <svg viewBox="0 0 16 16"><path d="M11.013 1.427a1.75 1.75 0 012.474 0l1.086 1.086a1.75 1.75 0 010 2.474l-8.61 8.61c-.21.21-.47.364-.756.445l-3.251.93a.75.75 0 01-.927-.928l.929-3.25c.081-.286.235-.547.445-.758l8.61-8.61zm.176 4.823L9.75 4.81l-6.286 6.287a.253.253 0 00-.064.108l-.558 1.953 1.953-.558a.253.253 0 00.108-.064l6.286-6.286z"/></svg>
+        </div>
+        <div class="readme-card">
+          <div class="readme-title-banner">
+            <h2>Abhishek Rai</h2>
+            <div class="subtitle">Salesforce Developer | CRM Architect | Apex Engineer</div>
+          </div>
+
+          <div class="typing-wrap" id="typing-el"></div><span class="cursor"></span>
+
+          <div class="readme-skills">Apex &nbsp;|&nbsp; LWC &nbsp;|&nbsp; Visualforce Expert</div>
+
+          <div class="badge-row">
+            <span class="badge badge-views">📊 Profile Views <b>30</b></span>
+            <a href="#" class="badge badge-linkedin">in LinkedIn</a>
+            <span class="badge badge-gmail">✉ Gmail</span>
+            <a href="#" class="badge badge-trail">☁ Trailblazer</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Contribution graph -->
+      <div class="contrib-section">
+        <div class="contrib-header">
+          <span>47 contributions in the last year</span>
+          <span style="color:var(--cyan);cursor:pointer">Contribution settings ▾</span>
+        </div>
+        <div class="contrib-body">
+          <div class="contrib-graph" id="contrib-graph"></div>
+          <div style="display:flex;justify-content:flex-end;align-items:center;gap:6px;margin-top:12px;font-size:12px;color:var(--muted);">
+            Less
+            <div style="width:10px;height:10px;border-radius:2px;background:var(--bg3)"></div>
+            <div style="width:10px;height:10px;border-radius:2px;background:#0e4429"></div>
+            <div style="width:10px;height:10px;border-radius:2px;background:#006d32"></div>
+            <div style="width:10px;height:10px;border-radius:2px;background:#26a641"></div>
+            <div style="width:10px;height:10px;border-radius:2px;background:#39d353"></div>
+            More
+          </div>
+        </div>
+      </div>
+
+    </main>
+  </div>
+</section>
+
+<footer>
+  © 2026 GitHub, Inc. · <a href="#" style="color:var(--muted)">Terms</a> · <a href="#" style="color:var(--muted)">Privacy</a> · <a href="#" style="color:var(--muted)">Security</a> · <a href="#" style="color:var(--muted)">Status</a> · <a href="#" style="color:var(--muted)">Docs</a>
+</footer>
+
+<script>
+/* ── BACKGROUND CANVAS ── */
+(function() {
+  const canvas = document.getElementById('bg-canvas');
+  const ctx = canvas.getContext('2d');
+  let W, H;
+
+  function resize() {
+    W = canvas.width = window.innerWidth;
+    H = canvas.height = window.innerHeight;
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  // Stars
+  const stars = Array.from({length: 180}, () => ({
+    x: Math.random() * 2000,
+    y: Math.random() * 2000,
+    r: Math.random() * 1.2 + 0.2,
+    a: Math.random(),
+    da: (Math.random() - 0.5) * 0.008
+  }));
+
+  // Floating nodes (network effect)
+  const nodes = Array.from({length: 40}, () => ({
+    x: Math.random() * 1600,
+    y: Math.random() * 1200,
+    vx: (Math.random() - 0.5) * 0.4,
+    vy: (Math.random() - 0.5) * 0.4,
+    r: Math.random() * 2 + 1
+  }));
+
+  function draw() {
+    ctx.clearRect(0, 0, W, H);
+
+    // Deep space gradient
+    const grad = ctx.createRadialGradient(W/2, H*0.3, 0, W/2, H*0.3, Math.max(W,H));
+    grad.addColorStop(0, 'rgba(30, 20, 60, 0.6)');
+    grad.addColorStop(0.5, 'rgba(13, 17, 23, 0.4)');
+    grad.addColorStop(1, 'rgba(0, 0, 0, 0)');
+    ctx.fillStyle = grad;
+    ctx.fillRect(0, 0, W, H);
+
+    // Nebula glow top-right
+    const neb = ctx.createRadialGradient(W*0.8, H*0.15, 0, W*0.8, H*0.15, 300);
+    neb.addColorStop(0, 'rgba(88, 166, 255, 0.04)');
+    neb.addColorStop(1, 'rgba(88, 166, 255, 0)');
+    ctx.fillStyle = neb;
+    ctx.fillRect(0, 0, W, H);
+
+    // Stars
+    stars.forEach(s => {
+      s.a += s.da;
+      if (s.a <= 0 || s.a >= 1) s.da *= -1;
+      ctx.beginPath();
+      ctx.arc(s.x % W, s.y % H, s.r, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(230,237,243,${s.a * 0.7})`;
+      ctx.fill();
+    });
+
+    // Network nodes
+    nodes.forEach(n => {
+      n.x += n.vx; n.y += n.vy;
+      if (n.x < 0 || n.x > W) n.vx *= -1;
+      if (n.y < 0 || n.y > H) n.vy *= -1;
+    });
+
+    // Connections
+    for (let i = 0; i < nodes.length; i++) {
+      for (let j = i + 1; j < nodes.length; j++) {
+        const dx = nodes[i].x - nodes[j].x;
+        const dy = nodes[i].y - nodes[j].y;
+        const dist = Math.sqrt(dx*dx + dy*dy);
+        if (dist < 130) {
+          ctx.beginPath();
+          ctx.moveTo(nodes[i].x, nodes[i].y);
+          ctx.lineTo(nodes[j].x, nodes[j].y);
+          ctx.strokeStyle = `rgba(88,166,255,${(1 - dist/130) * 0.08})`;
+          ctx.lineWidth = 0.5;
+          ctx.stroke();
+        }
+      }
+    }
+
+    nodes.forEach(n => {
+      ctx.beginPath();
+      ctx.arc(n.x, n.y, n.r, 0, Math.PI * 2);
+      ctx.fillStyle = 'rgba(88,166,255,0.2)';
+      ctx.fill();
+    });
+
+    requestAnimationFrame(draw);
+  }
+  draw();
+})();
+
+/* ── GLOBE CANVAS ── */
+(function() {
+  const c = document.getElementById('globe-canvas');
+  if (!c) return;
+  const g = c.getContext('2d');
+  const cx = 160, cy = 160, R = 140;
+  let t = 0;
+
+  // Dot grid for globe
+  const dots = [];
+  for (let lat = -80; lat <= 80; lat += 12) {
+    for (let lon = -180; lon <= 180; lon += 12) {
+      dots.push({ lat: lat * Math.PI/180, lon: lon * Math.PI/180 });
+    }
+  }
+
+  function project(lat, lon, rot) {
+    const x = Math.cos(lat) * Math.sin(lon + rot);
+    const y = Math.sin(lat);
+    const z = Math.cos(lat) * Math.cos(lon + rot);
+    return { x: cx + x * R, y: cy - y * R, z };
+  }
+
+  // Arc paths (like GitHub's landing arcs)
+  const arcs = [
+    { lat1: 40, lon1: -74, lat2: 51, lon2: 0 },
+    { lat1: 35, lon1: 139, lat2: 37, lon2: -122 },
+    { lat1: -23, lon1: -46, lat2: 48, lon2: 2 },
+    { lat1: 1, lon1: 103, lat2: 55, lon2: 37 },
+    { lat1: 19, lon1: 72, lat2: 40, lon2: -74 },
+  ].map(a => ({
+    lat1: a.lat1*Math.PI/180, lon1: a.lon1*Math.PI/180,
+    lat2: a.lat2*Math.PI/180, lon2: a.lon2*Math.PI/180,
+    progress: Math.random(),
+    speed: 0.003 + Math.random() * 0.003,
+    hue: [58, 163, 255, 255, 255][Math.floor(Math.random()*5)]
+  }));
+
+  function draw() {
+    g.clearRect(0, 0, 320, 320);
+    t += 0.005;
+
+    // Globe base glow
+    const grd = g.createRadialGradient(cx, cy, 0, cx, cy, R);
+    grd.addColorStop(0, 'rgba(31,111,235,0.15)');
+    grd.addColorStop(0.7, 'rgba(13,17,23,0.3)');
+    grd.addColorStop(1, 'rgba(0,0,0,0)');
+    g.fillStyle = grd;
+    g.beginPath();
+    g.arc(cx, cy, R, 0, Math.PI*2);
+    g.fill();
+
+    // Dots
+    dots.forEach(d => {
+      const p = project(d.lat, d.lon, t);
+      if (p.z > 0) {
+        const alpha = p.z * 0.6;
+        const size = p.z * 1.5;
+        g.beginPath();
+        g.arc(p.x, p.y, size, 0, Math.PI*2);
+        g.fillStyle = `rgba(56,139,253,${alpha * 0.6})`;
+        g.fill();
+      }
+    });
+
+    // Arcs
+    arcs.forEach(a => {
+      a.progress += a.speed;
+      if (a.progress > 1.4) a.progress = 0;
+
+      const steps = 40;
+      const trail = 0.25;
+      const end = Math.min(a.progress, 1);
+      const start = Math.max(0, a.progress - trail);
+
+      g.beginPath();
+      let first = true;
+      for (let i = Math.floor(start * steps); i <= Math.floor(end * steps); i++) {
+        const frac = i / steps;
+        const lat = a.lat1 + (a.lat2 - a.lat1) * frac;
+        const lon = a.lon1 + (a.lon2 - a.lon1) * frac;
+        const p = project(lat, lon, t);
+        if (p.z < 0) continue;
+        if (first) { g.moveTo(p.x, p.y); first = false; }
+        else g.lineTo(p.x, p.y);
+      }
+
+      const prog = (a.progress % 1);
+      g.strokeStyle = `rgba(${a.hue===255?'200,120,255':'88,166,255'},${0.8 * (1 - Math.abs(prog - 0.5)*2)})`;
+      g.lineWidth = 1.5;
+      g.stroke();
+    });
+
+    // Rim
+    g.beginPath();
+    g.arc(cx, cy, R, 0, Math.PI*2);
+    g.strokeStyle = 'rgba(56,139,253,0.15)';
+    g.lineWidth = 1;
+    g.stroke();
+
+    requestAnimationFrame(draw);
+  }
+  draw();
+})();
+
+/* ── TYPING ANIMATION ── */
+(function() {
+  const el = document.getElementById('typing-el');
+  if (!el) return;
+  const phrases = [
+    '> Building the future on Salesforce...',
+    '> Crafting elegant Apex solutions...',
+    '> Architecting CRM ecosystems...',
+    '> LWC component maestro...',
+  ];
+  let pi = 0, ci = 0, deleting = false, wait = 0;
+
+  function tick() {
+    const phrase = phrases[pi];
+    if (!deleting) {
+      el.textContent = phrase.slice(0, ci + 1);
+      ci++;
+      if (ci === phrase.length) { deleting = true; wait = 60; }
+    } else {
+      if (wait-- > 0) { setTimeout(tick, 30); return; }
+      el.textContent = phrase.slice(0, ci - 1);
+      ci--;
+      if (ci === 0) { deleting = false; pi = (pi + 1) % phrases.length; }
+    }
+    setTimeout(tick, deleting ? 40 : 70);
+  }
+  tick();
+})();
+
+/* ── CONTRIBUTION GRAPH ── */
+(function() {
+  const graph = document.getElementById('contrib-graph');
+  if (!graph) return;
+  const levels = [0,0,0,1,1,1,2,2,3,3,4];
+  for (let w = 0; w < 52; w++) {
+    const week = document.createElement('div');
+    week.className = 'contrib-week';
+    for (let d = 0; d < 7; d++) {
+      const day = document.createElement('div');
+      const lvl = levels[Math.floor(Math.random() * levels.length)];
+      day.className = 'contrib-day' + (lvl ? ' l'+lvl : '');
+      week.appendChild(day);
+    }
+    graph.appendChild(week);
+  }
+})();
+</script>
+</body>
+</html>
